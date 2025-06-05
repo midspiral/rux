@@ -1,0 +1,119 @@
+// grid.rux
+// Responsive grid layout system
+// Category: Layout
+
+extends base.rux
+
+Component: Grid
+  Description: "Flexible grid system for responsive layouts"
+  Category: "layout"
+  
+  !Structure:
+    !Container:
+      Element: "div.grid | section.grid[aria-label]"
+      !display: grid
+      !gap using var(--spacing-{size})
+      
+    !Items:
+      Element: ".grid__item"
+      !direct children of grid
+      ?span utilities for column control
+      
+  !Patterns:
+    # Different grid approaches
+    
+    AutoResponsive:
+      Class: ".grid--auto"
+      !grid-template-columns: repeat(auto-fit, minmax({min}, 1fr))
+      !responsive without media queries
+      
+    FixedColumns:
+      Class: ".grid--{n}-col"
+      !defined column count
+      !responsive breakpoints
+      !stack on mobile
+      
+    Template:
+      Class: ".grid--template"
+      !named grid areas
+      !semantic area names
+      !responsive template changes
+  
+  !Accessibility:
+    includes: [*base-a11y]
+    
+    GridSpecific:
+      !logical DOM order matches visual order
+      !no critical content in decorative cells
+      ?landmarks for major grid sections
+  
+  ?Responsive:
+    ?mobile-first breakpoints
+    ?column reduction on smaller screens
+    ?gap adjustment per breakpoint
+    ?reordering for optimal mobile layout
+  
+  ~Enhancements:
+    ~animated grid transitions
+    ~masonry/pinterest layout
+    ~drag-and-drop reordering
+    ~filterable items with animation
+    ~infinite scroll
+    ~parallax cells
+    ~3D card flip layouts
+    ~magnetic hover effects
+    
+  Variants:
+    CardGrid:
+      extends: Grid
+      Purpose: "Consistent card layouts"
+      
+      !Behavior:
+        !uniform card dimensions
+        !consistent gaps
+        !minimum 250px card width
+        
+      ~Features:
+        ~filter bar
+        ~sort options
+        ~animated filtering
+        ~staggered load animation
+        
+    ImageGrid:
+      extends: Grid
+      Purpose: "Gallery layouts"
+      
+      !Requirements:
+        !preserve aspect ratios
+        !lazy load all images
+        !accessible image descriptions
+        
+      ?Features:
+        ?lightbox integration
+        ?zoom on hover
+        ?caption overlays
+        
+      ~Creative:
+        ~masonry layout
+        ~tilt effects
+        ~reveal animations
+        ~Ken Burns effect
+        
+    DashboardGrid:
+      extends: Grid
+      Purpose: "Widget-based layouts"
+      
+      !Requirements:
+        !widget containers
+        !responsive stacking
+        
+      ?Features:
+        ?drag to reorder
+        ?collapsible widgets
+        ?user preferences
+        ?add/remove widgets
+        
+      ~Enhancements:
+        ~smooth reorder animations
+        ~widget flip for settings
+        ~glass morphism widgets

@@ -1,0 +1,150 @@
+// select.rux
+// Dropdown selection component
+// Category: Selection & Input
+
+extends base.rux
+
+Component: Select
+  Description: "Dropdown for selecting from a list of options"
+  Category: "selection-input"
+  
+  !Structure:
+    !Wrapper:
+      Element: ".select"
+      !position: relative for dropdown
+      
+    # Native HTML select (baseline)
+    !NativeSelect:
+      Element: "select.select__native"
+      !name attribute for forms
+      !id for label association
+      
+      Options:
+        !option elements with values
+        !meaningful option text
+        ?optgroup for categorization
+        ?disabled options where appropriate
+        
+    # Enhanced custom select (progressive enhancement)
+    ?CustomSelect:
+      Trigger:
+        Element: "button.select__trigger[role='combobox']"
+        !aria-expanded state
+        !aria-haspopup="listbox"
+        !display selected value
+        
+      Dropdown:
+        Element: ".select__dropdown[role='listbox']"
+        !positioned absolutely
+        !hidden when closed
+        !max-height with scroll
+        
+        Options:
+          Element: ".select__option[role='option']"
+          !aria-selected state
+          !keyboard navigable
+  
+  !Accessibility:
+    includes: [*base-a11y, *form-a11y]
+    
+    SelectSpecific:
+      !associated label element
+      !keyboard navigation:
+        - Arrow keys navigate options
+        - Enter/Space selects
+        - Escape closes dropdown
+        - Type-ahead to jump to options
+      !announce selection changes
+      !announce option count
+      
+  !States:
+    !closed: default collapsed state
+    !open: dropdown visible
+    !focus: visible outline
+    !disabled: non-interactive
+    !invalid: error styling with message
+    
+    ?loading: fetching options
+    ?empty: no options available
+  
+  ?Features:
+    ?search/filter options
+    ?clear selection button
+    ?multi-select capability
+    ?async option loading
+    ?create new option
+    ?option groups
+    ?rich option content (icons, descriptions)
+  
+  ~Visual:
+    ~custom dropdown arrow
+    ~smooth open/close animation
+    ~custom scrollbar
+    ~floating UI positioning
+    ~option hover effects
+    ~selected option highlight
+    ~glassmorphism dropdown
+    ~parallax scroll
+    ~spring animations
+    ~option icons
+    ~color coding
+    ~gradient backgrounds
+    
+  Variants:
+    MultiSelect:
+      extends: Select
+      
+      !Requirements:
+        !multiple attribute or aria-multiselectable
+        !selected items display
+        !clear all action
+        
+      ?Features:
+        ?tags/chips for selections
+        ?select all option
+        ?selection count
+        ?drag to reorder
+        
+      ~Visual:
+        ~animated tag addition/removal
+        ~pill-style selections
+        ~stacking animation
+        
+    Searchable:
+      extends: Select
+      
+      !Requirements:
+        !input field for searching
+        !filter options as typing
+        !no results message
+        !clear search action
+        
+      ?Features:
+        ?fuzzy matching
+        ?highlight matched text
+        ?recent searches
+        ?popular options
+        
+      ~Enhancements:
+        ~typeahead suggestions
+        ~animated filtering
+        ~search icon animation
+        
+    AsyncSelect:
+      extends: Select
+      
+      !Requirements:
+        !loading state while fetching
+        !error state handling
+        !retry capability
+        
+      ?Features:
+        ?infinite scroll
+        ?pagination
+        ?cache results
+        ?debounced search
+        
+      ~Visual:
+        ~skeleton loading
+        ~progressive reveal
+        ~smooth data transitions
